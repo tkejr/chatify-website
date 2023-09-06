@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./../App.css";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = "https://ncsbbldpasvmvaskuuty.supabase.com"; // Replace with your Supabase URL
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jc2JibGRwYXN2bXZhc2t1dXR5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5Mzk3NjAzOCwiZXhwIjoyMDA5NTUyMDM4fQ.MXUHsLthkS6ubyqpLBddOILgTO_b-sHVO5WXealT8RE"; // Replace with your Supabase API key
-
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 function Home() {
   const [email, setEmail] = useState("");
@@ -15,26 +8,38 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const { data, error } = await supabase.from("emails").insert([
-        {
-          email: email,
-        },
-      ]);
+    const requestData = {
+      email: email,
+    };
 
-      if (error) {
-        console.log(error);
-        alert("Error adding email");
-      } else {
-        console.log(data);
+    const config = {
+      method: "post",
+      url: "https://chatify-1017.restdb.io/rest/contact", // Assuming the collection for emails is named "emails" on restdb.io
+      headers: {
+        "Content-Type": "application/json",
+        "x-apikey": "64f8fe7e6888546a9b0bfe93", // Replace with your actual API key
+      },
+      data: requestData,
+    };
+
+    try {
+      const response = await axios(config);
+
+      if (response.data) {
+        // Assuming a successful response includes a 'data' field
+        console.log(response.data);
         alert("Email added successfully");
         setEmail(""); // Clear the email input
+      } else {
+        console.log("Error adding email");
+        alert("Error adding email");
       }
     } catch (error) {
       console.log(error);
       alert("Error adding email");
     }
   };
+
   return (
     <>
       <div>
