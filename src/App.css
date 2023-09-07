@@ -28,8 +28,8 @@
     --color-primary: 268 97% 71%;
     --color-contrast: 216 8% 12%;
     --color-secondary: 0 0% 100%;
-    --gradient: linear-gradient(89deg, rgba(106, 34, 252, 1) 7%, rgba(176, 109, 253, 1) 94%);
-  }
+    --gradient: linear-gradient(89deg, rgba(245,146,55,1) 7%, rgba(248,178,115,1) 94%);
+}
 
   body {
     --active: 0;
